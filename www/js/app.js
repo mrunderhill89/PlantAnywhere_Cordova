@@ -5,6 +5,7 @@ require.config({
     underscore: 'libs/underscore/underscore',
     backbone: 'libs/backbone/backbone',
     backbone_associations: 'libs/backbone/backbone-associations',
+    backbone_streams: 'libs/backbone/backbone-streams',
     bacon:'libs/bacon/bacon',
     pixi:'libs/pixi/pixi.dev',
   },
@@ -13,6 +14,10 @@ require.config({
             deps:["backbone"],
             exports:"Backbone"
         },
+        backbone_streams:{
+            deps:["backbone", "bacon"],
+            exports:"Backbone"
+        }
     }
 });
 

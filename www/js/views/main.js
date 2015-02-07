@@ -1,6 +1,5 @@
-define(['jquery_mobile', 'backbone', 'bacon',
-       'views/streaming_view', 'views/environment'],function($, Backbone, Bacon, StreamingView, EnvironmentView){
-    var MainView = StreamingView.extend({
+define(['jquery_mobile', 'backbone_streams', 'bacon', 'views/environment'],function($, Backbone, Bacon, EnvironmentView){
+    var MainView = Backbone.StreamingView.extend({
         initialize: function(params){
             this.device_ready =  Bacon.fromEventTarget(document, 'deviceready');
             this.device_ready.onValue(this.render.bind(this));
