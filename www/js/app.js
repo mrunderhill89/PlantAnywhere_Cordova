@@ -16,11 +16,14 @@ require.config({
     }
 });
 
-requirejs(['bacon', 'views/main', 'cordova.js'],
-    function (Bacon, MainView) {
+requirejs(['bacon', 'backbone', 'views/main', 'routes/router', 'cordova.js'],
+    function (Bacon, Backbone, MainView, MainRouter) {
         var exec = cordova.require('cordova/exec');
+        var main_router = new MainRouter({});
         var main_view = new MainView({
-            el: ".app"
+            el: ".app",
+            router: main_router
         });
+        Backbone.history.start({ pushState: true });
     }
 ); 

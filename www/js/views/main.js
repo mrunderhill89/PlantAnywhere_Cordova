@@ -1,11 +1,22 @@
-define(['jquery_mobile', 'backbone', 'bacon'],function($, Backbone, Bacon){
-    var MainView = Backbone.View.extend({
+define(['jquery_mobile', 'backbone', 'bacon',
+       'views/streaming_view', 'views/environment'],function($, Backbone, Bacon, StreamingView, EnvironmentView){
+    var MainView = StreamingView.extend({
         initialize: function(params){
             this.device_ready =  Bacon.fromEventTarget(document, 'deviceready');
             this.device_ready.onValue(this.render.bind(this));
+            this.sub_views = {
+                environment: new EnvironmentView()
+            };
             
+            this.router = params.router;
         },
         render: function(){
+            if (this.current){
+                this.$el.empty().append(
+                    this.sub_views[this.current].render().$el
+                );
+            };
+            return this;
         },
     });
     return MainView;

@@ -1,11 +1,12 @@
-define(['backbone', 'bacon'],function(Backbone, Bacon){
+define(['backbone', 'utils/bacon_utils', 'utils/stream_box'],function(Backbone, Bacon, Streams){
     var StreamingView = Backbone.View.extend({
-        initialize: function(params){
-            this._streams = {
-                render: new Bacon.Bus()
-            };
-            this._streams.render.onValue(this.render.bind(this));
-        }
+        constructor: function(){
+            this.streams = new Streams({
+            });
+            this.stream("render").onValue(this.render.bind(this));
+            Backbone.View.apply(this,arguments);
+        },
     });
-    return MainView;
+    Streams.mixin(StreamingView.prototype,"streams")
+    return StreamingView;
 });
