@@ -26,7 +26,7 @@ requirejs(['bacon', 'backbone', 'views/main', 'routes/router', 'cordova.js'],
         var exec = cordova.require('cordova/exec');
         var main_router = new MainRouter({});
         var main_view = new MainView({
-            el: ".app",
+            el: ".main_view",
             router: main_router
         });
         Backbone.history.start({ pushState: true });

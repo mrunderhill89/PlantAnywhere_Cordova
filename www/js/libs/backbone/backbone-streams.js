@@ -44,7 +44,11 @@
             this.stream(key);
         }.bind(this));
         _.each(properties, function(value,key){
-            this.property(key,key,value);
+            if (value instanceof Bacon.Property){
+                this.property(key,value);
+            } else {
+                this.property(key,key,value);
+            }
         }.bind(this));
     };
     var default_mixins = {
@@ -86,9 +90,9 @@
                     } else if (stream instanceof Bacon.Observable){
                         this.properties[name] = stream.toProperty(initial);
                     } else if (_.isString(stream)){
-                        this.properties[name] = this.stream(name).toProperty(initial);
+                        this.properties[name] = this.stream(stream).toProperty(initial);
                     } else {
-                        throw("Streams.Property: Expected property or string for 'stream' parameter. Got "+typeof(stream)+" '"+stream+"' instead.");
+                        this.properties[name] = this.stream(name).toProperty(initial);
                     }
                 };
                 return this.properties[name];
@@ -196,8 +200,8 @@
     */
     var StreamingView = Backbone.StreamingView = Backbone.View.extend({
         constructor: function(options){
-            var stream_params = (options.streams || {});
-            var property_params = (options.properties || {});
+            var stream_params = ((options && options.streams) || {});
+            var property_params = ((options && options.properties) || {});
             this.streams = new Streams(stream_params, property_params);
             this.on_stream("render", function(){
                 this.render.apply(this, arguments);

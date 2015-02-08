@@ -1,22 +1,24 @@
-define(['jquery', 'underscore', 'backbone_streams', 'utils/bacon_utils', 'models/environment'], function($, _, Backbone, Bacon, EnvironmentModel){
+define(['underscore', 'backbone_streams', 'utils/bacon_utils', 'models/environment'], function(_, Backbone, Bacon, EnvironmentModel){
     var MainRouter = Backbone.Router.extend({
         routes: {
             "environment/:id":"environment",
             "*actions": "default"
         },
         initialize: function(params){
-            this.streams = new Backbone.Streams({
-                environment: null,
-                user: null
-            },{
-                environment: null,
-                user: null
+            this.streams = new Backbone.Streams();
+            this.property("user", this.stream("user").scan_replace());
+            this.property("environment", this.stream("environment").scan_replace());
+            this.on_property("environment", function(params){
+                var env = params.current;
+                if (env){
+                    env.on_property("name", function(name){
+                        console.log(name);
+                    });
+                }
             });
             var test_env = new EnvironmentModel({
                 name:"Test Environment"
             });
-            test_env.on_property("name", function(name){console.log(name);});
-
             this.fire_stream("environment", test_env);
             this.on('route:default', function (actions) {
                 console.log("router.default:" + actions );

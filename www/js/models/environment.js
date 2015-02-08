@@ -8,6 +8,8 @@ define(['backbone_streams', 'bacon'],function(Backbone, Bacon){
             name: "",
             description: "",
         },
+        initialize: function(attributes, options){
+        }
     });
     return EnvironmentModel;
 });

@@ -10,30 +10,27 @@ define(["underscore", 'bacon'], function(_,Bacon){
             return memo;
         };
     }
-    function equivalent(prev,next){return next===prev;}
-    function replace(add, remove, cancel){
-        //By default, only cancel if we're replacing something with itself.
-        !_.isUndefined(cancel) || (cancel = equivalent);
-        return function(prev, next){
-            var c = _.isFunction(cancel)?cancel(next,prev):cancel;
-            if (c) {
-                return prev
-            };
-            if (!!prev && _.isFunction(remove)){
-                remove(prev, next)
+    function replace(cancel){
+        return function(memo, next){
+            var c = _.isFunction(cancel)?
+                cancel(memo, next):
+                cancel;
+            memo.prev = memo.current;
+            if (!c){
+                memo.current = next;
             }
-            if (!!next && _.isFunction(add)){
-                add(next, prev);
-            }
-            return next;
-        }
-    }
+            return memo;
+        };
+    };
+    function changed(memo){
+        return memo.prev !== memo.current;
+    };
     var Observable = Bacon.Observable.prototype;
     Observable.scan_delta = function(diff){
-        return this.scan({}, delta(diff)).filter(".delta").map(".delta");
+        return this.scan({}, delta(diff)).filter(".delta");//.map("delta") 
     }
-    Observable.scan_replace = function(initial, add, remove, cancel){
-        return this.scan(initial, replace(add,remove,cancel));
+    Observable.scan_replace = function(initial, cancel){
+        return this.scan({current:initial}, replace(cancel)).filter(changed);
     }
     return Bacon;
 })
