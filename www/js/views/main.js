@@ -4,7 +4,9 @@ define(['jquery_mobile', 'backbone_streams', 'utils/bacon_utils', 'views/environ
             this.router = params.router;
             this.sub_views = {
                 environment: new EnvironmentView({
-                    model:this.router.property("environment")
+                    properties: {
+                        model:this.router.property("environment")
+                    }
                 })
             };
             this.property("current_view", this.stream("current_view").scan_replace("environment"));

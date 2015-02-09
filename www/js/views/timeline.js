@@ -7,7 +7,7 @@ define(['jquery','jquery_mobile', 'backbone_streams', 'bacon'],function($,$m, Ba
                 .attr("id","scrubber")
                 .attr("value","0")
                 .attr("min","0")
-                .attr("max","100")
+                .attr("max","23")
                 ;
             this.property("time", null, 0.0);
         },

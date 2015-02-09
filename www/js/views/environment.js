@@ -10,6 +10,16 @@ define(['jquery', 'jquery_mobile', 'pixi','backbone_streams', 'views/timeline', 
                 -this.timeline.$el.height();
             this.renderer = Pixi.autoDetectRenderer(this.width,this.height);
             this.renderer.render(this.stage);
+            this.stream("report_time", 
+                this.timeline.stream("time").combine(
+                    this.property("model").map(".current"), 
+                    function(time,env){
+                        return env.get("illumination").integrate(time);
+                    })
+               ).onValue(
+                    function(light){console.log(light);}
+            );
+            /*
             this.on_property("model", function(diff){
                 if (diff){
                     if (diff.prev){};
@@ -26,6 +36,7 @@ define(['jquery', 'jquery_mobile', 'pixi','backbone_streams', 'views/timeline', 
                     };
                 }
             }.bind(this));
+            */
         },
         render: function(){
             this.$el.empty()
