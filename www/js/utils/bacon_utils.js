@@ -32,5 +32,15 @@ define(["underscore", 'bacon'], function(_,Bacon){
     Observable.scan_replace = function(initial, cancel){
         return this.scan({current:initial}, replace(cancel)).filter(changed);
     }
+    /*
+        this.property("active", this.property("parent").flatMap(function(p){
+            if (!p){return Bacon.constant(true);}
+            return p.property("active").combine(p.property("current"), function(active, current){
+                return active && current === this;
+            }.bind(this));
+        }.bind(this)));
+    */
+    Observable.scan_sequence = function(next){
+    }
     return Bacon;
 })

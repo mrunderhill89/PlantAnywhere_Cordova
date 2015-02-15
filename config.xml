@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.example.hello" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>HelloWorld</name>
+    <name>PlantAnywhere</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+	Manage a virtual garden and test different soil and planting conditions.
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="mrunderhill89@gmail.com" href="http://cordova.io">
+        Kevin Cameron
     </author>
     <content src="index.html" />
     <access origin="*" />
